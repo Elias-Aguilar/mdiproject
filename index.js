@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var express = require("express")
 var app = express()
 
@@ -7,7 +9,7 @@ app.use(express.json());
 
 let port = 3002
 
-app.listen(port,function(req,res){
+app.listen(port,function(req, res){
     console.log("Servidor listo en puerto: " + port);
     console.log("http://localhost:" + port);
 })
