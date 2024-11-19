@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  mdiprojectsite:
+    image: 825277395595.dkr.ecr.sa-east-1.amazonaws.com/mdiproject:latest
+    container_name: mdiprojectsite
+    restart: unless-stopped
+    ports:
+      - "80:8080"
+    command: npm run dev
+    depends_on:
+      - database
+  database:
+    image: mysql:8.0
+    container_name: mdidatabase
+    hostname: mdidatabasehost
+    restart: unless-stopped
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./_mysql/data:/var/lib/mysql
+      - ./_mysql/backups:/var/backups
+    environment:
+      MYSQL_DATABASE: 'mdidatabase'
+      MYSQL_USER: 'mdiuserdatabase'
+      MYSQL_PASSWORD: 'md1p4ssw0rd'
+      MYSQL_ROOT_PASSWORD: 'md1p4ssw0rd'
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   restart: always
+  #   ports:
+  #     - '8081:80'
+  #   environment:
+  #     PMA_HOST: database
+  #     PMA_PORT: 3307
+  #     PMA_ARBITRARY: 1
+  #   depends_on:
+  #     - database

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= titulo %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="/style.css">
+
+    <link href="/output.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&family=Bebas+Neue&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: #343a40;
+            color: white;
+            width: 250px;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 5%;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #495057;
+        }
+
+        .sidebar ul li a i {
+            font-size: 1.5rem;
+        }
+
+        .sidebar ul li a.active {
+            background-color: #495057;
+            color: #ffffff;
+        }
+
+        .sidebar ul li a.active i,
+        .sidebar ul li a.active span {
+            color: #ffffff;
+        }
+
+        .sidebar.collapsed ul li a span {
+            display: none;
+        }
+
+        .sidebar.collapsed ul li a i {
+            margin-right: 0;
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: 10px;
+            right: -15px;
+            z-index: 1050;
+            background-color: #495057;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #page-content {
+            margin-left: 250px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.collapsed + #page-content {
+            margin-left: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="d-flex justify-content-between align-items-center px-3 py-2">
+            <h5 class="m-0">Configuración</h5>
+            <button class="toggle-button" id="toggleSidebar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <ul>
+            <li>
+                <a href="/" class="text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
+                    <i class="bx bx-grid-alt bx-tada-hover"></i>
+                    <span class="ms-2">Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="/configuracion" class="text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
+                    <i class="bx bx-grid-alt bx-tada-hover"></i>
+                    <span class="ms-2">Secciones</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tipoPlatos" class="active text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
+                    <i class="bx bx-coffee bx-tada-hover"></i>
+                    <span class="ms-2">Tipos de Platos</span>
+                </a>
+            </li>
+            <li>
+                <a href="/platosCombos" class="text-white px-3 py-2 rounded d-block text-decoration-none" aria-current="page">
+                    <i class="bx bx-list-ul bx-tada-hover"></i>
+                    <span class="ms-2">Platos de Combos</span>
+                </a>
+            </li>
+            <li>
+                <a href="/combos" class="text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
+                    <i class="bx bx-info-circle bx-tada-hover"></i>
+                    <span class="ms-2">Combos</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="page-content">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card bg-white">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="float-end text-5xl mb-2" data-bs-toggle="modal" data-bs-target="#agregarTipoDePlatoModal"><i class="bi bi-plus-square-fill text-success"></i></h2>
+                                </div>
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover font-roboto font-bold">
+                                            <% if (resultados.length >= 0) { %>
+                                                <thead class="table-dark" style="display: table; width: 100%; table-layout: fixed;">
+                                                    <tr class="uppercase">
+                                                        <th scope="col">Nombre Tipo del Plato</th>
+                                                        <th scope="col">Imagen Tipo del Plato</th>
+                                                        <th scope="col" class="text-center">Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="display: block; max-height: 40vh; overflow-y: auto; width: 100%; table-layout: fixed;">
+                                                    <% resultados.forEach(tipoPlatos => { %>
+                                                        <tr style="display: table; width: 100%; table-layout: fixed;">
+                                                            <td><%= tipoPlatos.nombreTipo %></td>
+                                                            <td>
+                                                                <img src="../img/<%= tipoPlatos.imagenTipoPlato ?? 'image-not-available.jpg' %>" alt="Imagen del menú">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div class="btn-group" role="group">
+                                                                    <h2 class="cursorPointer text-3xl" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></h2>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li>
+                                                                            <a class="dropdown-item text-gray-500" href="#" id="<%= tipoPlatos.idTipo %>" onclick="editMenu(this.id)">
+                                                                                <i class="bi bi-pencil-square text-secondary text-xl m-3"></i>Editar
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item text-gray-500" href="#" id="<%= tipoPlatos.idTipo %>" onclick="deleteMenu(this.id)">
+                                                                                <i class="bi bi-trash3 text-secondary text-xl m-3"></i>Borrar
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <% }); %>
+                                                </tbody>
+                                            <% } %>
+                                        </table>
+                                    </div>
+                                </div>
+                                  
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal font-roboto font-bold fade" id="agregarTipoDePlatoModal" tabindex="-1" aria-labelledby="agregarTipoDePlatoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content fondoBisque">
+                <div class="modal-header">
+                    <h2 class="modal-title text-3xl" id="agregarTipoDePlatoModalLabel">Agregar Tipo De Plato</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container rounded-lg">
+                    <form action="/guardarTipoPlato" method="POST" enctype="multipart/form-data">
+                            <div class="space-y-12">
+                                <div class="border-gray-900/10 pb-12">
+                                    <div class="border-gray-900/10">                            
+                                        <input type="hidden" name="id" id="id">
+                                        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                            <div class="sm:col-span-2">
+                                                <label for="nombreTipo" class="block text-sm font-medium leading-6 text-black font-bold">Nombre Tipo</label>
+                                                <div class="mt-2">
+                                                    <input placeholder="Ingresar nombre de Tipo" type="text" name="nombreTipo" id="nombreTipo" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="idSeccion" class="form-label">Sección</label>
+                                    <select id="idSeccion" name="idSeccion" class="form-select" required>
+                                        <option value="" disabled selected>Selecciona una sección</option>
+                                    </select>
+                                </div>
+                            
+                                <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">                        
+                                    <div class="col-span-full">
+                                        <label for="imagen" class="block text-sm font-medium leading-6 text-black font-bold">Imagen</label>
+                                        <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-white">
+                                            <div class="text-center" id="upload-container">
+                                                <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                    <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                                                </svg>
+                                                <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                                                    <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                                        <span>Subir un archivo</span>
+                                                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                                    </label>
+                                                    <p class="pl-1">o arrastrar y soltar</p>
+                                                </div>
+                                                <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                                            </div>
+                                            <div id="preview">
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 flex items-center justify-end gap-x-6">
+                                <button type="button" class="text-sm font-semibold leading-6 text-gray-900" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.getElementById('toggleSidebar');
+        const pageContent = document.getElementById('page-content');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            const icon = toggleButton.querySelector('i');
+            if (sidebar.classList.contains('collapsed')) {
+                icon.classList.replace('fa-arrow-left', 'fa-arrow-right');
+            } else {
+                icon.classList.replace('fa-arrow-right', 'fa-arrow-left');
+            }
+        });
+
+        document.getElementById('file-upload').addEventListener('change', function(event) {
+            var files = event.target.files;
+            var uploadContainer = document.getElementById('upload-container');
+            uploadContainer.classList.add("hidden");
+            
+            var preview = document.getElementById('preview');
+            
+            // Limpiar el contenido existente
+            preview.innerHTML = '';
+    
+            // Recorrer todos los archivos seleccionados
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+    
+                // Solo procesar archivos de imagen
+                if (!file.type.match('image.*')) {
+                    continue;
+                }
+    
+                var img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.height = '100px';
+                img.style.display = 'block';
+                img.style.marginBottom = '10px';
+    
+                var fileInfo = document.createElement('p');
+                fileInfo.textContent = `Nombre del archivo: ${file.name}, Tipo: ${file.type}, Tamaño: ${file.size} bytes`;
+                fileInfo.style.fontSize = '14px';
+                fileInfo.style.marginTop = '0';
+    
+                preview.appendChild(img);
+                preview.appendChild(fileInfo);
+            }
+        });
+
+        function deleteMenu(productoId) {
+            if (confirm('¿Estás seguro de que deseas eliminar este menú?')) {
+                
+                fetch(`/eliminarMenu/${productoId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        console.error('Error al eliminar el menú');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        function editMenu(menuId) {
+            // Mostrar el modal
+            const modal = new bootstrap.Modal(document.getElementById('agregarMenuModal'));
+            modal.show();
+
+            // Obtener datos del menú
+            fetch(`/getMenu/${menuId}`)
+                .then(response => response.json())
+                .then(data => {
+                    
+                    // Llenar campos del formulario con los datos del menú
+                    document.getElementById('id').value = data.idSeccion || '';
+                    console.log(document.getElementById('id').value);
+                    
+                    // Mostrar la imagen actual, si existe
+                    if (data.imagen) {
+                        const imgSrc = `../img/${data.imagen}`;
+                        document.getElementById('preview').innerHTML = `<img src="${imgSrc}" alt="Imagen del menú" style="max-width: 100%;">`;
+                        
+                        var uploadContainer = document.getElementById('upload-container');
+                        uploadContainer.classList.add("hidden");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos del menú:', error);
+                });
+        }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const seccionSelect = document.getElementById('idSeccion');
+
+    // Obtener las secciones desde el servidor
+        fetch('/secciones/list')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(seccion => {
+                    const option = document.createElement('option');
+                    option.value = seccion.idSeccion;
+                    option.textContent = seccion.nombreSeccion;
+                    seccionSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar las secciones:', error));
+    });
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

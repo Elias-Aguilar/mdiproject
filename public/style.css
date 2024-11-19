@@ -1,0 +1,249 @@
+
+body {
+    background-color: #ffcaa6;
+}
+
+.carousel-item img{
+    margin: 0 auto;
+    height: 80vh !important;
+}
+
+#cardProductos {
+    height: 100%;
+}
+
+#cardProductos img{
+    height: 100%;
+}
+
+.borderCard {
+    border-radius: 15px;
+}
+
+.fondoBisque {
+    background-color: bisque;
+}
+
+#tarjetaProductos{
+    height: 100%;
+}
+
+#tarjetaProductos img{
+    height: 100%;
+    border-radius: 6px;
+}
+
+/* ------------------- */
+
+#cardOferta {
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    color: #212121;
+}
+
+.image {
+    height: 10rem;
+}
+
+.content {
+    padding: 1rem;
+    text-align: center;
+}
+
+.text-1 {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.text-2 {
+    margin-top: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.text-2 span:first-child {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 900;
+}
+
+.text-2 span:last-child {
+    margin-top: 0.5rem;
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.action {
+    margin-top: 1rem;
+    display: inline-block;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+}
+
+.date {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: rgba(156, 163, 175, 1);
+    cursor: pointer !important;
+
+}
+
+/* ------------- */
+
+/* From Uiverse.io by faxriddin20 */
+.button-container {
+    display: flex;
+    background-color: black;
+    width: 250px;
+    height: 40px;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+}
+
+.button {
+    outline: 0 !important;
+    border: 0 !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+}
+
+.icon {
+    font-size: 20px;
+}
+
+/* ------------------------ */
+.carousel-control-next,
+.carousel-control-prev {
+    color: black;
+    opacity: 1;
+    width: 5%;
+}
+
+.carousel-item {
+    height: 70vh !important;
+}
+
+/* ---------- */
+
+/* From Uiverse.io by alexruix */
+#cardParaProductos {
+    padding: .8em;
+    background: #f5f5f5;
+    position: relative;
+    overflow: visible;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#cardImgParaProductos {
+    background-color: #ffcaa6;
+    height: 40%;
+    width: 100%;
+    border-radius: .5rem;
+    transition: .3s ease;
+}
+
+.img-fluid{
+    height: 100px;
+    width: 100%;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+}
+
+.card-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ddd;
+}
+
+/*Text*/
+.text-title {
+    font-weight: 900;
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.text-body {
+    font-size: .9em;
+    padding-bottom: 10px;
+}
+
+/*Button*/
+.card-button {
+    border: 1px solid #252525;
+    display: flex;
+    padding: .3em;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: .3s ease-in-out;
+}
+
+/*Hover*/
+#cardImgParaProductos:hover {
+    transform: translateY(-25%);
+    box-shadow: rgba(226, 196, 63, 0.25) 0px 13px 47px -5px, rgba(180, 71, 71, 0.3) 0px 8px 16px -8px;
+}
+
+.card-button:hover {
+    border: 1px solid #ffcaa6;
+    background-color: #ffcaa6;
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.table td, .table th {
+    height: 50px; /* Altura fija para las filas */
+    vertical-align: middle; /* Centrar el contenido verticalmente */
+}
+
+.table img {
+    width: 100px; /* Ancho fijo para las imágenes */
+    height: auto; /* Mantener la proporción */
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    --bs-card-border-color: transparent;
+    --bs-card-bg: transparent;
+}
+

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>
+        <%= titulo %>
+    </title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="/style.css">
+
+    <link href="/output.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="bg-gray-800">
+            <div class="ml-5 max-w-7xl px-2 sm:px-6 lg:px-8">
+                <div class="relative flex h-16 items-center">
+                    <div class="flex items-center">
+                        <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                        <a class="text-white text-lg font-semibold ml-4" href="/">Menu Restaurante</a>
+                    </div>
+                    <div class="hidden sm:block sm:ml-6">
+                        <div class="flex space-x-4 ml-4">
+                            <a href="/" class="text-white bg-gray-900 px-3 py-2 rounded" aria-current="page">Inicio</a>
+                            <a href="/menus" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded">Menus</a>
+                            <a href="/caracteristicasProducto" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded">Características del Productos</a>
+                            <a href="/configuracion" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Configuración</a>
+                        </div>
+                    </div>
+    
+                    <!-- Button to toggle mobile menu, aligned to the right -->
+                    <div class="ml-auto flex sm:hidden">
+                        <button id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div class="sm:hidden hidden" id="mobile-menu">
+                <div class="space-y-1 px-2 pb-3 pt-2">
+                    <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Inicio</a>
+                    <a href="/menuDesayunos" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Menu</a>
+                    <a href="/tabla" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Listado de Productos</a>
+                    <a href="/tipoPlatos" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Tipos de Platos</a>
+                </div>
+            </div>
+        </nav>
+    
+        <script>
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+            });
+        </script>
+    </header>
+
+    <% if (resultados.length >= 0) { %>
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Primera imagen siempre activa -->
+                <% resultados.forEach((secciones, index) => { %>
+                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                        <img src="../img/<%= secciones.imagenSeccion ?? 'image-not-available.jpg' %>" alt="<%= secciones.nombreSeccion %>">
+                    </div>
+                <% }); %>
+            </div>
+    
+            <h3><i class="bi bi-arrow-left-circle-fill carousel-control-prev text-4xl" data-bs-slide="prev" type="button" data-bs-target="#carouselExampleAutoplaying"></i></h3>
+            <h3><i class="bi bi-arrow-right-circle-fill carousel-control-next text-4xl" data-bs-slide="next" type="button" data-bs-target="#carouselExampleAutoplaying"></i></h3>
+        </div>
+
+        <div class="container mt-5 font-roboto font-bold">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card p-2 borderCard fondoBisque">                            
+                        <div class="card-body">
+                            <h1 class="card-title text-xl">Nuestros Productos</h1>
+                            <div class="row">
+                                <% resultados.forEach(secciones => { %>
+                                    <div class="col-3 mb-4" onclick="goToMenu()">
+                                        <div class="card" id="tarjetaProductos">
+                                            <img src="../img/<%= secciones.imagenSeccion ?? 'image-not-available.jpg' %>" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><%= secciones.nombreSeccion %></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+
+        <h1 class="text-center mt-3 mb-3">OFERTA DEL DIA</h1>
+
+        <div class="container-fluid" style="background-color: red; padding: 2% 5%;">
+            <div class="row">
+                <% resultados.forEach(menu => { %>
+                    <div class="col-4 mb-4">
+                        <div class="card" id="cardOferta">
+                            <div class="image">
+                                <img src="../img/<%= menu.imagen ?? 'image-not-available.jpg' %>" alt="">
+                            </div>
+                            <div class="content">
+                                <p class="text-1">
+                                    Run with the pack
+                                </p>
+        
+                                <div class="text-2">
+                                    <span>
+                                        Get 35% off
+                                    </span>
+                                    <span>On your next order over $100</span>
+                                </div>
+        
+                                <a class="action" href="">
+                                    Get Discount
+                                </a>
+        
+                                <p class="date">
+                                    Offer valid until 29th April, 2023 *
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    <% } %>
+
+    <script>
+        // Función para redirigir a la ruta deseada
+        function goToMenu() {
+            window.location.href = '/menuDesayunos';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Características del Producto</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
+        />
+        
+        <link href="/output.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+        <link rel="stylesheet" href="/style.css">
+        
+    </head>
+    
+    <body>
+
+        <header>
+            <nav class="bg-gray-800">
+                <div class="ml-5 max-w-7xl px-2 sm:px-6 lg:px-8">
+                    <div class="relative flex h-16 items-center">
+                        <div class="flex items-center">
+                            <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                            <a class="text-white text-lg font-semibold ml-4" href="/">Menu Restaurante</a>
+                        </div>
+                        <div class="hidden sm:block sm:ml-6">
+                            <div class="flex space-x-4 ml-4">
+                                <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded">Inicio</a>
+                                <a href="/menuDesayunos" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded">Menu</a>
+                                <a href="/tabla" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded">Listado de Productos</a>
+                                <a href="/caracteristicasProducto" class="text-white bg-gray-900 px-3 py-2 rounded" aria-current="page">Características del Productos</a>
+                            </div>
+                        </div>
+        
+                        <!-- Button to toggle mobile menu, aligned to the right -->
+                        <div class="ml-auto flex sm:hidden">
+                            <button id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                                <span class="sr-only">Open main menu</span>
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Mobile menu, show/hide based on menu state. -->
+                <div class="sm:hidden hidden" id="mobile-menu">
+                    <div class="space-y-1 px-2 pb-3 pt-2">
+                        <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Inicio</a>
+                        <a href="/menuDesayunos" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Menu</a>
+                        <a href="/tabla" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Listado de Productos</a>
+                    </div>
+                </div>
+            </nav>
+        
+            <script>
+                document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    mobileMenu.classList.toggle('hidden');
+                });
+            </script>
+        </header>
+
+        <% if (resultados.length > 0) { %>
+            <div class="container-fluid mt-5">
+                <div class="row">
+                    <% resultados.forEach((menu, index) => { %>
+                        <div class="col-12 mt-5">
+                            <% 
+                                // Definimos el patrón de orientaciones
+                                const orientation = index % 4;
+                            %>
+                            <div class="flex flex-col p-3 rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark md:flex-row  overflow-y-auto 
+                                <%= orientation === 1 ? 'md:flex-row-reverse' : '' %> 
+                                <%= orientation === 2 ? 'md:flex-col' : '' %>
+                                <%= orientation === 3 ? 'md:flex-col-reverse' : '' %>">
+                                
+                                <% if (orientation === 0 || orientation === 1) { %>
+                                    <img class="w-full h-[400px] rounded-lg object-cover md:rounded-l-lg" 
+                                         src="../img/<%= menu.imagen ?? 'image-not-available.jpg' %>" alt="" />
+                                <% } %>
+        
+                                <div class="flex flex-col justify-between p-6 md:ml-auto md:max-h-96 overflow-hidden">
+                                    <h5 class="mb-2 text-xl font-medium"><%= menu.titulo %></h5>
+                                    <p class="mb-4 text-base text-justify">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quos placeat voluptas cupiditate aliquam sint veniam, maxime atque repellat asperiores voluptatem ipsa, ipsam consectetur enim veritatis, omnis a recusandae amet facere mollitia dolorem eaque adipisci. Quam, laudantium nam. Id autem eaque animi itaque cumque, enim laudantium corporis neque, exercitationem nam eos voluptatem, officiis similique tempore quae culpa facere excepturi quasi in non numquam ab alias? Saepe provident voluptas iste minus ratione architecto cum totam, quisquam blanditiis, aut atque necessitatibus hic, laudantium sed error accusamus voluptates unde voluptatem quae! Consectetur magnam quasi nam nihil laborum. Eum debitis accusamus nulla tempora amet earum, ducimus qui molestiae temporibus, rem impedit quibusdam, blanditiis beatae porro? Eligendi dolor aliquid, ut eius temporibus reprehenderit saepe minima aperiam ad ea soluta dignissimos voluptates iure dolores suscipit eum modi impedit! Quaerat, aut. Fuga eligendi accusamus molestiae odio, laudantium aspernatur distinctio magni voluptas assumenda iure provident quam eum alias nisi nobis veniam repellat inventore sit accusantium. Doloribus cumque, iusto sunt cupiditate, totam facere pariatur facilis ratione vero maxime alias itaque nulla voluptate tempora unde doloremque quasi aut minima qui harum natus voluptas similique. Ut omnis eum quo porro, maxime facilis laboriosam, nemo nulla hic recusandae mollitia. Dolorum, accusamus quos.
+                                    </p>
+                                </div>
+        
+                                <% if (orientation === 2 || orientation === 3) { %>
+                                    <img class="w-full h-[400px] rounded-lg object-cover md:rounded-l-lg" 
+                                         src="../img/<%= menu.imagen ?? 'image-not-available.jpg' %>" alt="" />
+                                <% } %>
+                            </div>  
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        <% } %>
+
+        <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
