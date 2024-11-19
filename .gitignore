@@ -1,4 +1,5 @@
-/mysql
+/_mysql
+/public/img
 
 # Compiled output
 /dist

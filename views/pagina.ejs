@@ -92,7 +92,7 @@
                             <h1 class="card-title text-xl">Nuestros Productos</h1>
                             <div class="row">
                                 <% resultados.forEach(secciones => { %>
-                                    <div class="col-3 mb-4" onclick="goToMenu()">
+                                    <div class="col-3 mb-4" onclick="goToMenu('<%= secciones.idSeccion %>')">
                                         <div class="card" id="tarjetaProductos">
                                             <img src="../img/<%= secciones.imagenSeccion ?? 'image-not-available.jpg' %>" class="card-img-top" alt="...">
                                             <div class="card-body">
@@ -148,8 +148,12 @@
 
     <script>
         // Función para redirigir a la ruta deseada
-        function goToMenu() {
-            window.location.href = '/menuDesayunos';
+        function goToMenu(idSeccion) {
+            // Desplazarse suavemente a la sección con el ID correspondiente
+            const section = document.getElementById(idSeccion);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     </script>
 
