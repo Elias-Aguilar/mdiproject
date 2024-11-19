@@ -7,7 +7,7 @@ var conexion = mysql.createConnection({
   port: process.env.DB_PORT || 3306,
   database: process.env.DB_NAME || 'mdi',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'r00tpassw0rd',
+  password: process.env.DB_PASSWORD || '',
 });
 
 conexion.connect(function (error) {
