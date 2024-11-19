@@ -1,11 +1,12 @@
+require('dotenv').config();
 var mysql = require('mysql2');
 
-var conexion = mysql.createConnection({
-  host: 'locahost',
-  port: 3306,
-  database: 'mdidatabase',
-  user: 'mdiuserdatabase',
-  password: 'md1p4ssw0rd',
+var conexion = mysql.createConnection({ 
+  host: '54.233.224.247', 
+  port: 3306, 
+  database: 'mdidatabase', 
+  user: 'mdiuserdatabase', 
+  password: 'md1p4ssw0rd', 
 });
 
 conexion.connect(function (error) {

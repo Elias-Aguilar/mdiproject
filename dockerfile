@@ -22,6 +22,6 @@ COPY app.js .
 
 COPY index.js .
 
-EXPOSE 8080
+EXPOSE 3002
 
 CMD ["npm", "ci"]

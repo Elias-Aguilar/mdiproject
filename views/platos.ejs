@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= titulo %></title>
-    <!-- Vincula el CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="stylesheet" href="/style.css">
@@ -101,7 +99,6 @@
     </style>
 </head>
 <body>
-
     <div class="sidebar" id="sidebar">
         <div class="d-flex justify-content-between align-items-center px-3 py-2">
             <h5 class="m-0">Configuración</h5>
@@ -112,12 +109,12 @@
         <ul>
             <li>
                 <a href="/" class="text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
-                    <i class='bx bx-home bx-tada-hover'></i>
+                    <i class="bx bx-home bx-tada-hover"></i>
                     <span class="ms-2">Inicio</span>
                 </a>
             </li>
             <li>
-                <a href="/configuracion" class="active text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
+                <a href="/configuracion" class="text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
                     <i class="bx bx-grid-alt bx-tada-hover"></i>
                     <span class="ms-2">Secciones</span>
                 </a>
@@ -129,7 +126,7 @@
                 </a>
             </li>
             <li>
-                <a href="/platos" class="text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
+                <a href="/platos" class="active text-gray-300 px-3 py-2 rounded d-block text-decoration-none">
                     <i class="bx bx-info-circle bx-tada-hover"></i>
                     <span class="ms-2">Platos</span>
                 </a>
@@ -149,7 +146,6 @@
         </ul>
     </div>
 
-    <!-- Contenedor principal -->
     <div id="page-content">
         <div class="container mt-5">
             <div class="row">
@@ -158,38 +154,41 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <h2 class="float-end text-5xl mb-2" data-bs-toggle="modal" data-bs-target="#agregarMenuModal"><i class="bi bi-plus-square-fill text-success"></i></h2>
+                                    <h2 class="float-end text-5xl mb-2" data-bs-toggle="modal" data-bs-target="#agregarPlatosModal"><i class="bi bi-plus-square-fill text-success"></i></h2>
                                 </div>
                                 <div class="col-12">
-                                    <!-- Contenedor con overflow -->
                                     <div class="table-responsive">
                                         <table class="table table-sm table-hover font-roboto font-bold">
                                             <% if (resultados.length >= 0) { %>
                                                 <thead class="table-dark" style="display: table; width: 100%; table-layout: fixed;">
                                                     <tr class="uppercase">
-                                                        <th scope="col">Nombre Sección</th>
-                                                        <th scope="col">Imagen Sección</th>
+                                                        <th scope="col">Nombre del Plato</th>
+                                                        <th scope="col">Descripcion del Plato</th>
+                                                        <th scope="col">Precio del Plato</th>
+                                                        <th scope="col">Imagen del Plato</th>
                                                         <th scope="col" class="text-center">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="display: block; max-height: 40vh; overflow-y: auto; width: 100%; table-layout: fixed;">
-                                                    <% resultados.forEach(secciones => { %>
+                                                    <% resultados.forEach(platos => { %>
                                                         <tr style="display: table; width: 100%; table-layout: fixed;">
-                                                            <td><%= secciones.nombreSeccion %></td>
+                                                            <td><%= platos.nombrePlato %></td>
+                                                            <td><%= platos.descripcionPlato %></td>
+                                                            <td><%= platos.precioPlato %></td>
                                                             <td>
-                                                                <img src="../img/<%= secciones.imagenSeccion ?? 'image-not-available.jpg' %>" alt="Imagen del menú">
+                                                                <img src="../img/<%= platos.imagenPlato ?? 'image-not-available.jpg' %>" alt="Imagen del menú">
                                                             </td>
                                                             <td class="text-center">
                                                                 <div class="btn-group" role="group">
                                                                     <h2 class="cursorPointer text-3xl" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></h2>
                                                                     <ul class="dropdown-menu">
                                                                         <li>
-                                                                            <a class="dropdown-item text-gray-500" href="#" id="<%= secciones.idSeccion %>" onclick="editMenu(this.id)">
+                                                                            <a class="dropdown-item text-gray-500" href="#" id="<%= platos.idPlato %>" onclick="editMenu(this.id)">
                                                                                 <i class="bi bi-pencil-square text-secondary text-xl m-3"></i>Editar
                                                                             </a>
                                                                         </li>
                                                                         <li>
-                                                                            <a class="dropdown-item text-gray-500" href="#" id="<%= secciones.idSeccion %>" onclick="deleteMenu(this.id)">
+                                                                            <a class="dropdown-item text-gray-500" href="#" id="<%= platos.idPlato %>" onclick="deleteMenu(this.id)">
                                                                                 <i class="bi bi-trash3 text-secondary text-xl m-3"></i>Borrar
                                                                             </a>
                                                                         </li>
@@ -213,29 +212,64 @@
     </div>
     
     <!-- Modal -->
-    <div class="modal font-roboto font-bold fade" id="agregarMenuModal" tabindex="-1" aria-labelledby="agregarMenuModalLabel" aria-hidden="true">
+    <div class="modal font-roboto font-bold fade" id="agregarPlatosModal" tabindex="-1" aria-labelledby="agregarPlatosModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content fondoBisque">
                 <div class="modal-header">
-                    <h2 class="modal-title text-3xl" id="agregarMenuModalLabel">Agregar Menu</h2>
+                    <h2 class="modal-title text-3xl" id="agregarPlatosModalLabel">Agregar Plato</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container rounded-lg">
-                    <form action="/guardarMenu" method="POST" enctype="multipart/form-data">
+                    <form action="/guardarPlato" method="POST" enctype="multipart/form-data">
                             <div class="space-y-12">
                                 <div class="border-gray-900/10 pb-12">
                                     <div class="border-gray-900/10">                            
                                         <input type="hidden" name="id" id="id">
                                         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                             <div class="sm:col-span-2">
-                                                <label for="nombreSeccion" class="block text-sm font-medium leading-6 text-black font-bold">Nombre Seccion</label>
+                                                <label for="nombrePlato" class="block text-sm font-medium leading-6 text-black font-bold">Nombre del Plato</label>
                                                 <div class="mt-2">
-                                                    <input placeholder="Ingresar nombre de seccion" type="text" name="nombreSeccion" id="nombreSeccion" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                    <input placeholder="Ingresar nombre del Plato" type="text" name="nombrePlato" id="nombrePlato" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="border-gray-900/10 pb-12">
+                                    <div class="border-gray-900/10">                            
+                                        <input type="hidden" name="id" id="id">
+                                        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                            <div class="sm:col-span-2">
+                                                <label for="descripcionPlato" class="block text-sm font-medium leading-6 text-black font-bold">Descripción del Plato</label>
+                                                <div class="mt-2">
+                                                    <textarea id="descripcionPlato" name="descripcionPlato" rows="4" cols="50" placeholder="Escribe una descripción aquí..." class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-gray-900/10 pb-12">
+                                    <div class="border-gray-900/10">                            
+                                        <input type="hidden" name="id" id="id">
+                                        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                            <div class="sm:col-span-2">
+                                                <label for="precioPlato" class="block text-sm font-medium leading-6 text-black font-bold">Precio del Plato</label>
+                                                <div class="mt-2">
+                                                    <input placeholder="Ingresar precio del Plato" type="number" name="precioPlato" id="precioPlato" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="idTipo" class="form-label">Tipo de Plato</label>
+                                    <select id="idTipo" name="idTipo" class="form-select" required>
+                                        <option value="" disabled selected>Selecciona un tipo</option>
+                                    </select>
                                 </div>
                             
                                 <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">                        
@@ -333,8 +367,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Recarga la página o elimina la fila de la tabla
-                        location.reload(); // O puedes manejar la eliminación de la fila directamente
+                        location.reload();
                     } else {
                         console.error('Error al eliminar el menú');
                     }
@@ -348,12 +381,12 @@
             const modal = new bootstrap.Modal(document.getElementById('agregarMenuModal'));
             modal.show();
 
-            // Obtener los datos del menú
-            fetch(`/getMenu/${menuId}`) // Asegúrate de que esta ruta devuelva los datos correctos
+            // Obtener datos del menú
+            fetch(`/getMenu/${menuId}`)
                 .then(response => response.json())
                 .then(data => {
                     
-                    // Llenar los campos del formulario con los datos del menú
+                    // Llenar campos del formulario con los datos del menú
                     document.getElementById('id').value = data.idSeccion || '';
                     console.log(document.getElementById('id').value);
                     
@@ -368,17 +401,26 @@
                 })
                 .catch(error => {
                     console.error('Error al obtener los datos del menú:', error);
-                    // Opcional: puedes mostrar un mensaje de error
                 });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+        const tipoSelect = document.getElementById('idTipo');
+
+        fetch('/tiposPlatos/list')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.idTipo;
+                    option.textContent = tipo.nombreTipo;
+                    tipoSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar los tipos de plato:', error));
+        });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

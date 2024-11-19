@@ -5,7 +5,7 @@ var app = express()
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-let port = 8080
+let port = 3002
 
 app.listen(port,function(req,res){
     console.log("Servidor listo en puerto: " + port);
